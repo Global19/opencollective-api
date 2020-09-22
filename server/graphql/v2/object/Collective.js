@@ -9,7 +9,7 @@ export const Collective = new GraphQLObjectType({
   name: 'Collective',
   description: 'This represents a Collective account',
   interfaces: () => [Account, AccountWithHost, AccountWithContributions],
-  isTypeOf: collective => collective.type === collectiveTypes.COLLECTIVE,
+  isTypeOf: collective => collective.type === collectiveTypes.COLLECTIVE || collectiveTypes.ORGANIZATION,
   fields: () => {
     return {
       ...AccountFields,

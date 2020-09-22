@@ -876,6 +876,7 @@ input CollectiveCreateInput {
   name: String!
   slug: String!
   description: String!
+  website: String
   tags: [String]
   githubHandle: String
   settings: JSON

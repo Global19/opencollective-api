@@ -28,10 +28,13 @@ async function createCollective(_, args, req) {
 
   const collectiveData = {
     slug: args.collective.slug.toLowerCase(),
-    ...pick(args.collective, ['name', 'description', 'tags']),
+    ...pick(args.collective, ['name', 'description', 'tags', 'website', 'type']),
     isActive: false,
     CreatedByUserId: remoteUser.id,
-    settings: { ...DEFAULT_COLLECTIVE_SETTINGS, ...args.collective.settings },
+    settings:
+      args.collective.type === 'ORGANIZATION'
+        ? { ...args.collective.settings }
+        : { ...DEFAULT_COLLECTIVE_SETTINGS, ...args.collective.settings },
   };
 
   if (isCollectiveSlugReserved(collectiveData.slug)) {
@@ -81,7 +84,6 @@ async function createCollective(_, args, req) {
       throw new ValidationFailed('Host account is not activated as Host.');
     }
   }
-
   const collective = await models.Collective.create(collectiveData);
 
   // Add authenticated user as an admin
@@ -118,7 +120,7 @@ const createCollectiveMutation = {
   type: Collective,
   args: {
     collective: {
-      description: 'Information about the collective to create (name, slug, description, tags, ...)',
+      description: 'Information about the collective to create (name, slug, description, tags, website, ...)',
       type: new GraphQLNonNull(CollectiveCreateInput),
     },
     host: {

@@ -6,6 +6,8 @@ export const CollectiveCreateInput = new GraphQLInputObjectType({
   fields: () => ({
     name: { type: new GraphQLNonNull(GraphQLString) },
     slug: { type: new GraphQLNonNull(GraphQLString) },
+    website: { type: GraphQLString },
+    type: { type: GraphQLString },
     description: { type: new GraphQLNonNull(GraphQLString) },
     tags: { type: new GraphQLList(GraphQLString) },
     githubHandle: { type: GraphQLString },
