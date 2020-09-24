@@ -31,10 +31,7 @@ async function createCollective(_, args, req) {
     ...pick(args.collective, ['name', 'description', 'tags', 'website', 'type']),
     isActive: false,
     CreatedByUserId: remoteUser.id,
-    settings:
-      args.collective.type === 'ORGANIZATION'
-        ? { ...args.collective.settings }
-        : { ...DEFAULT_COLLECTIVE_SETTINGS, ...args.collective.settings },
+    settings: { ...DEFAULT_COLLECTIVE_SETTINGS, ...args.collective.settings },
   };
 
   if (isCollectiveSlugReserved(collectiveData.slug)) {
