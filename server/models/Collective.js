@@ -1550,6 +1550,25 @@ export default function (Sequelize, DataTypes) {
     return member;
   };
 
+  /**
+   * Add an attendee to the members table for this event
+   */
+  Collective.prototype.addAttendee = async function (attendeeCollective, { user, order } = {}) {
+    if (this.type !== types.EVENT) {
+      throw Error('Can only add attendees on events');
+    } else {
+      const member = await models.Member.create({
+        role: roles.ATTENDEE,
+        CreatedByUserId: user?.id,
+        MemberCollectiveId: attendeeCollective.id,
+        CollectiveId: this.id,
+      });
+
+      await this.createMemberCreatedActivity(member, { order });
+      return member;
+    }
+  };
+
   Collective.prototype.createMemberCreatedActivity = async function (member, context, sequelizeParams) {
     // We refetch to preserve historic behavior and make sure it's up to date
     let order;

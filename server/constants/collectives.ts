@@ -8,6 +8,7 @@ export enum types {
   BOT = 'BOT',
   PROJECT = 'PROJECT',
   FUND = 'FUND',
+  GUEST = 'GUEST',
 }
 
 export const CollectiveTypesList = Object.values(types);

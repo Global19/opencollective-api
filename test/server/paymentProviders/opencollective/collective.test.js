@@ -238,7 +238,7 @@ describe('server/paymentProviders/opencollective/collective', () => {
       // Then there should be Errors for the Result of the query without any user defined as param
       expect(res.errors).to.exist;
       expect(res.errors).to.not.be.empty;
-      expect(res.errors[0].message).to.contain('You need to be authenticated to perform this action');
+      expect(res.errors[0].message).to.contain('You need to be logged in to be able to use an existing payment method');
 
       // Then there should also be Errors for the Result of the query through user2
       expect(resWithUserParam.errors).to.exist;
